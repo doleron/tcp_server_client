@@ -41,7 +41,7 @@ void onDisconnection(const pipe_ret_t & ret) {
 }
 
 
-int main() {
+int main(int argc, char ** argv) {
     //register to SIGINT to close client when user press ctrl+c
 	signal(SIGINT, sig_exit);
 
@@ -62,13 +62,14 @@ int main() {
 	}
 
 	// send messages to server
-	while(1)
-	{
-		std::string msg = "hello server\n";
+	//while(1)
+	//{
+	if (argc > 1) {
+		std::string msg = std::string(argv[1]);"type:add-eye, eye_index:0";
         pipe_ret_t sendRet = client.sendMsg(msg.c_str(), msg.size());
 		if (!sendRet.success) {
 			std::cout << "Failed to send msg: " << sendRet.msg << std::endl;
-			break;
+			//break;
 		}
 		sleep(1);
 	}
